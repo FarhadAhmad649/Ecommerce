@@ -1,8 +1,21 @@
 import React from 'react'
+import Hero from '../components/Hero'
+import LatestCollection from '../components/LatestCollection'
+import BestSeller from '../components/BestSeller'
+import OurPolicy from '../components/OurPolicy'
+import NewsLetterBox from '../components/NewsLetterBox'
+import Footer from '../components/Footer'
 
 function Home() {
   return (
-    <div>Home</div>
+    <div>
+      <Hero/>
+      <LatestCollection/>
+      <BestSeller/>
+      <OurPolicy/>
+      <NewsLetterBox/>
+      <Footer/>
+    </div>
   )
 }
 
