@@ -6,7 +6,7 @@ function Footer() {
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row justify-between items-start mt-30 mb-10">
+      <div className="flex flex-col gap-3 sm:gap-4 sm:flex-row justify-between items-start mt-30 mb-10">
         <div className="flex flex-col gap-2 sm:w-2/3 max-w-120">
           <img className="w-44 cursor-pointer" src={assets.logo} alt="" />
           <p className="text-gray-600">
