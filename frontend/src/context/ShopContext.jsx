@@ -1,5 +1,6 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import { products } from "../assets/assets";
+import {useNavigate} from 'react-router-dom'
 import { toast } from "react-toastify";
 
 export const ShopContext = createContext();
@@ -11,6 +12,9 @@ const ShopContextProvider = (props)=>{
     const [search, setSearch] = useState('');
     const [showSearch, setShowSearch] = useState(false)
     const [cartItems, setCartItems] = useState({})
+    const navigate = useNavigate();
+    const [added, setAdded] = useState(false);
+      
 
     const getCartCount = () =>{
         let totalCount = 0;
@@ -34,6 +38,12 @@ const ShopContextProvider = (props)=>{
 
     const addToCart = async (itemId, size) => {
 
+        setAdded(true);
+
+        setTimeout(() => {
+          setAdded(false);
+        }, 2000);
+
         if(!size){
             toast.error('Select Product Size')
             return
@@ -54,13 +64,43 @@ const ShopContextProvider = (props)=>{
         setCartItems(cartData)
     }
 
+    const updateQuantity = async (itemId, size, quantity)=>{
+        let cartData = structuredClone(cartItems)
+
+        cartData[itemId][size] = quantity
+
+        setCartItems(cartData)
+    }
+
+    const getCartAmount = ()=>{
+        let totalAmount = 0;
+        for(const items in cartItems){
+            let itemInfo = products.find((product)=> product._id === items);
+
+            if(!itemInfo) continue;
+
+            for(const item in cartItems[items]){
+                try {
+                    if(cartItems[items][item] > 0){
+                        totalAmount += itemInfo.price * cartItems[items][item]
+                    }
+                } catch (error) {
+                    toast.error(error.message)
+                }
+            }
+        }
+        return totalAmount;
+    }
+
 
     const value = {
         products,
         currency, delivery_fee,
         search, setSearch, showSearch, setShowSearch,
-        cartItems, addToCart,
+        cartItems, addToCart, added,
         getCartCount,
+        updateQuantity,
+        getCartAmount, navigate,
     }
 
     return (
