@@ -38,16 +38,23 @@ function Navbar() {
       </ul>
 
       <div className="flex items-center justify-center gap-6">
-        <img onClick={()=> setShowSearch(true)} className="w-5 cursor-pointer" src={assets.search_icon} alt="" />
+        <img
+          onClick={() => setShowSearch(true)}
+          className="w-5 cursor-pointer"
+          src={assets.search_icon}
+          alt=""
+        />
 
         <div className="flex gap-6">
           {/* PROFILE GROUP */}
           <div className="group relative">
-            <img
-              className="w-5 cursor-pointer"
-              src={assets.profile_icon}
-              alt=""
-            />
+            <Link to={"/login"}>
+              <img
+                className="w-5 cursor-pointer"
+                src={assets.profile_icon}
+                alt=""
+              />
+            </Link>
 
             <div className="hidden group-hover:block absolute right-0 pt-8">
               <div className="flex flex-col gap-2 w-36 bg-slate-100 text-gray-500 rounded p-3">

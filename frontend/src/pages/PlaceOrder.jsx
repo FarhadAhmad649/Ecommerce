@@ -118,10 +118,10 @@ function PlaceOrder() {
           {/* payment method */}
           <div className="flex flex-col items-start my-8">
             <Title text1={"PAYMENT"} text2={"METHOD"} />
-            <div className="flex gap-3 flex-col xl:flex-row">
+            <div className="flex gap-2 flex-col justify-center pt-2">
               <div
                 onClick={() => setMethod("stripe")}
-                className="flex items-center gap-2 border-[1.5px] border-gray-300 p-2 cursor-pointer"
+                className="flex items-center gap-2 border-[1.5px] border-gray-300 p-2 lg:p-1 cursor-pointer"
               >
                 <p
                   className={`size-3 rounded-full border-gray-300 ${method === "stripe" ? "bg-green-500" : ""}`}
@@ -131,7 +131,7 @@ function PlaceOrder() {
 
               <div
                 onClick={() => setMethod("razorpay")}
-                className="flex items-center gap-3 border-[1.5px] border-gray-300 p-2 cursor-pointer"
+                className="flex items-center gap-3 border-[1.5px] border-gray-300 p-2 lg:p-1 cursor-pointer"
               >
                 <p
                   className={`size-3 rounded-full border-gray-300 ${method === "razorpay" ? "bg-green-500" : ""}`}
@@ -141,7 +141,7 @@ function PlaceOrder() {
 
               <div
                 onClick={() => setMethod("cod")}
-                className="flex justify-start gap-4 border-[1.5px] border-gray-300 p-2"
+                className="flex justify-start gap-4 border-[1.5px] border-gray-300 p-2 lg:p-1"
               >
                 <p
                   className={`size-3 rounded-full border-gray-300 ${method === "cod" ? "bg-green-500" : ""}`}
