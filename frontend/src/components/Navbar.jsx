@@ -7,7 +7,14 @@ function Navbar() {
 
     const [menu, setMenu] = useState(false)
 
-    const {showSearch, setShowSearch, getCartCount} = useContext(ShopContext)
+    const {showSearch, setShowSearch, getCartCount, navigate, token, setToken, setCartItems} = useContext(ShopContext)
+
+    const logout = ()=>{
+      localStorage.removeItem('token')
+      setToken('')
+      setCartItems({})
+      navigate('/login')
+    }
 
   return (
     <div className="flex justify-between items-center py-4 font-medium">
@@ -48,27 +55,36 @@ function Navbar() {
         <div className="flex gap-6">
           {/* PROFILE GROUP */}
           <div className="group relative">
-            <Link to={"/login"}>
-              <img
-                className="w-5 cursor-pointer"
-                src={assets.profile_icon}
-                alt=""
-              />
-            </Link>
+            <img
+              onClick={() => navigate("/login")}
+              className="w-5 cursor-pointer"
+              src={assets.profile_icon}
+              alt=""
+            />
 
-            <div className="hidden group-hover:block absolute right-0 pt-8">
-              <div className="flex flex-col gap-2 w-36 bg-slate-100 text-gray-500 rounded p-3">
-                <Link to={'/my-profile'}>
-                  <p className="cursor-pointer hover:text-black">My Profile</p>
-                </Link>
-                <Link to={'/orders'}>
-                  <p className="cursor-pointer hover:text-black">Orders</p>
-                </Link>
-                <Link to={'/logout'}>
-                  <p className="cursor-pointer hover:text-black">Logout</p>
-                </Link>
+            {/* .........Dropdown Menu............ */}
+            {token && (
+              <div className="hidden group-hover:block absolute right-0 pt-8">
+                <div className="flex flex-col gap-2 w-36 bg-slate-100 text-gray-500 rounded p-3">
+                  <Link to={"/my-profile"}>
+                    <p className="cursor-pointer hover:text-black">
+                      My Profile
+                    </p>
+                  </Link>
+                  <Link to={"/orders"}>
+                    <p className="cursor-pointer hover:text-black">Orders</p>
+                  </Link>
+                  <Link to={"/login"}>
+                    <p
+                      onClick={logout}
+                      className="cursor-pointer hover:text-black"
+                    >
+                      Logout
+                    </p>
+                  </Link>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* CART */}
@@ -79,8 +95,6 @@ function Navbar() {
             </p>
           </Link>
 
-          
-
           {/* MOBILE MENU */}
           <img
             className="sm:hidden w-6 cursor-pointer"
@@ -90,7 +104,6 @@ function Navbar() {
           />
         </div>
       </div>
-      
 
       {/* MOBILE MENU SIDEBAR */}
       <div
@@ -141,7 +154,6 @@ function Navbar() {
           </NavLink>
         </ul>
       </div>
-      
     </div>
   );
 }

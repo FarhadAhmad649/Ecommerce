@@ -5,12 +5,12 @@ import ProductItems from './ProductItems';
 
 function LatestCollection() {
 
-    const {products, currency} = useContext(ShopContext)
+    const {products} = useContext(ShopContext)
     const [latestProducts, setLatestProducts] = useState([])
 
     useEffect(()=>{
         setLatestProducts(products.slice(0,10))
-    },[])
+    },[products])
 
   return (
     <div className="my-10 ">

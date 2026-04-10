@@ -7,7 +7,7 @@ function NewsLetterBox() {
   }
 
   return (
-    <div className="flex flex-col gap-2 justify-center items-center">
+    <div className="flex flex-col gap-2 justify-center items-center my-30">
       <h2 className='text-2xl font-bold'>Subscribe now & get 20% off</h2>
       <p className='text-gray-600 text-sm'>Lorem insum is simply text of the printing and tepesetting industry</p>
 
