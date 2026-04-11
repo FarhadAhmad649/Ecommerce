@@ -1,11 +1,45 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import React from 'react'
 import { ShopContext } from '../context/ShopContext'
 import Title from '../components/Title'
+import axios from 'axios'
 
 function Orders() {
 
-  const {currency, products} = useContext(ShopContext)
+  const {currency,backendUrl, token} = useContext(ShopContext)
+
+  const [orderData, setOrderData] = useState([])
+
+  const loadOrderData = async () => {
+    try {
+      if(!token){
+        return null
+      }else{
+        const response = await axios.post(backendUrl + '/api/order/userOrders', {}, {headers:{token}})
+
+        if(response.data.success){
+          let allOrdersItem = []
+          response.data.orders.map((order)=>{
+            order.items.map((item)=>{
+              item['status']= order.status
+              item['payment']= order.payment
+              item['paymentMethod']= order.paymentMethod
+              item['date']= order.date
+
+              allOrdersItem.push(item)
+            })
+          })
+          setOrderData(allOrdersItem.reverse())
+        }
+      }
+    } catch (error) {
+      
+    }
+  }
+
+  useEffect(()=>{
+    loadOrderData()
+  },[token])
 
   return (
     <div>
@@ -16,16 +50,16 @@ function Orders() {
 
         <div className=" ">
           <div className="">
-            {products === 0 ? (
+            {orderData === 0 ? (
               <p className="text-center text-gray-500 py-10">
                 OOps! You Did not Add Products to the Cart
               </p>
             ) : (
-              products.slice(1,4).map((item, index) => {
+              orderData.map((item, index) => {
                 return (
                   <div
                     key={index}
-                    className="grid grid-cols-1 md:grid-cols-3 items-center gap-4 border-t border-b border-gray-700 py-4"
+                    className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] items-center gap-4 border-t border-b border-gray-700 py-4"
                   >
                     <div className="flex gap-6 text-sm items-start justify-start">
                       <img
@@ -41,13 +75,23 @@ function Orders() {
                             {currency}
                             {item.price}
                           </p>
-                          <p className="">Quantity: 1</p>
-                          <p className="">Size: M</p>
+                          <p className="">
+                            Quantity: <span className='font-medium'>{item.quantity}</span>
+                          </p>
+                          <p className="">
+                            Size:{" "}
+                            <span className="font-medium">{item.size}</span>
+                          </p>
                         </div>
 
-                        <p className="mt-2">
+                        <p className="">
                           Date:{" "}
-                          <span className="text-gray-400">25 july, 2025</span>
+                          <span className="text-gray-400">{new Date(item.date).toDateString()}</span>
+                        </p>
+
+                        <p className="">
+                          Payment:{" "}
+                          <span className="text-gray-400">{item.paymentMethod}</span>
                         </p>
                       </div>
                     </div>
@@ -55,12 +99,13 @@ function Orders() {
                     <div className=" flex justify-end">
                       <div className="flex items-center gap-2">
                         <p className="min-w-2 h-2 rounded-full bg-green-500"></p>
-                        <p className="text-sm md:text-base">Ready to ship</p>
+                        <p className="text-sm md:text-base">{item.status}</p>
                       </div>
                     </div>
 
-                    <div className='flex justify-start md:justify-end'>
-                      <button className="border border-gray-400 px-4 py-2 font-medium text-sm text-gray-700 active:bg-gray-200 active:text-black cursor-pointer hover:bg-black hover:text-white">
+                    <div className="flex justify-start md:justify-end">
+                      <button
+                      onClick={(loadOrderData)} className="border border-gray-400 px-4 py-2 font-medium text-sm text-gray-700 active:bg-gray-200 active:text-black cursor-pointer hover:bg-black hover:text-white">
                         Track Order
                       </button>
                     </div>
