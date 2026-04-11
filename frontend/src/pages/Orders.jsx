@@ -86,7 +86,7 @@ function Orders() {
 
                         <p className="">
                           Date:{" "}
-                          <span className="text-gray-400">{new Date(item.date).toDateString()}</span>
+                          <span className="text-gray-400">{new Date(item.date).toLocaleDateString()}</span>
                         </p>
 
                         <p className="">
