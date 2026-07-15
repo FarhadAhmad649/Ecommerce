@@ -166,7 +166,7 @@ npm run dev
 **Farhad Ahmad**
 
 - GitHub: https://github.com/FarhadAhmad649
-- LinkedIn: *(Add your LinkedIn profile)*
+- LinkedIn: https://linkedin.com/in/farhadahmad649
 
 ---
 
